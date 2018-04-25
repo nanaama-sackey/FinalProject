@@ -6,13 +6,22 @@
 package icpfinalproject;
 
 /**
- *
+ *extra model that is used for the TableView
+ * 
  * @author jean72human
  */
 public class ModelTable {
     String book_id, isbn, Author, title, desciption, publisher;
 
-
+    /**
+     *
+     * @param book_id
+     * @param isbn
+     * @param Author
+     * @param title
+     * @param desciption
+     * @param publisher
+     */
     public ModelTable(String book_id, String isbn, String Author, String title, String desciption, String publisher) {
         this.book_id = book_id;
         this.isbn = isbn;
@@ -22,26 +31,50 @@ public class ModelTable {
         this.publisher = publisher;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getIsbn() {
         return isbn;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getPublisher() {
         return publisher;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getAuthor() {
         return Author;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getDesciption() {
         return desciption;
     }
     
+    /**
+     *
+     * @return
+     */
     public String getId(){
         return this.book_id;
     }

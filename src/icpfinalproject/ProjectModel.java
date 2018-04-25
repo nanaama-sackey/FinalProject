@@ -15,7 +15,8 @@ import java.util.Calendar;
 import javax.swing.JOptionPane;
 
 /**
- *
+ *main model that accesses the main database 
+ * 
  * @author jean72human
  */
 public class ProjectModel{

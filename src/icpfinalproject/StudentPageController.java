@@ -27,7 +27,7 @@ import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
 /**
- * FXML Controller class
+ * FXML Controller class for the student page, is also used for lecturers since students and lecturers have same access
  *
  * @author jean72human
  */

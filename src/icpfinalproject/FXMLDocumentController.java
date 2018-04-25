@@ -64,9 +64,18 @@ public class FXMLDocumentController implements Initializable {
             controller2.registerStage(stage);
             Scene scene = new Scene(root);
             stage.setScene(scene);
-        }
-        
-        
+        }   
+    }
+    
+    public void leadToRegister(ActionEvent event) throws IOException {
+        FXMLLoader loader;
+        loader = new FXMLLoader(getClass().getResource("registeringForm.fxml"));
+        Parent root = (Parent) loader.load();
+        RegisteringFormController controller2 = loader.getController();
+        controller2.registerModel(model);
+        controller2.registerStage(stage);
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
     }
     
     public void registerModel(ProjectModel m){

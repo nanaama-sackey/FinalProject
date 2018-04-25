@@ -27,7 +27,7 @@ import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
 /**
- * FXML Controller class
+ * FXML Controller class for the librarian page
  *
  * @author jean72human
  */
