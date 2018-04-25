@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import javax.swing.JOptionPane;
 
 /**
@@ -293,18 +294,25 @@ public class ModelClass {
         return toReturn;
     }
     
-    /*
+    
+    
     public boolean borrowBook(int id, int book_id){
         boolean borrowed = false;
         
         try{
+            Calendar today = Calendar.getInstance();
+            today.set(Calendar.HOUR_OF_DAY, 0);
+            
             String sql = "Insert into borrow(id, bookid, borodate, returndate) values (?,?,?,?)";
             stmt = conn.prepareStatement(sql);
             
             stmt.setInt(1, id);
-            stmt.setInt(2, bookid);
-            stmt.setDate(5, publisher);
-            stmt.setInt(6, id);
+            stmt.setInt(2, book_id);
+            stmt.setDate(3, new java.sql.Date(today.getTime().getTime()));
+            
+            today.add(today.DATE, 30);
+            
+            stmt.setDate(4, new java.sql.Date(today.getTime().getTime()));
             
             stmt.executeUpdate();
             
@@ -313,18 +321,19 @@ public class ModelClass {
             stmt.close();
             
         } catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Can't delete book");
+            JOptionPane.showMessageDialog(null, "Can't borrow book");
             System.out.println(e);
         }
         
         return borrowed;
     }
-    */
+    
     
     
     public static void main(String[] args) throws SQLException {
         
         ModelClass m = new ModelClass();
+        
         ArrayList<String[]> books = m.getBooks();
         for (int i=0; i<books.size(); i++){
             for (int k=0;k<6;k++){
@@ -332,6 +341,8 @@ public class ModelClass {
             }
             System.out.println();
         }
+        
+        System.out.println(m.borrowBook(3, 4));
         //System.out.println(m.insertBook(37872, "Atikpozomar Ekpekpeko", "Love is sweet like pepper", "Intensive romance", "Bankou Ltd."));
         //System.out.println(m.updateBook(3, 39043, "Atikpozomar Ekpekpeko", "Love is bitter like tilapia", "Intensive romance", "Bankou Ltd."));
         //System.out.println(m.deleteBook(7));
