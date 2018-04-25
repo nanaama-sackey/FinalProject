@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  *
  * @author jean72human
  */
-public class Models {
+public class Models{
     
     // JDBC driver name and database URL
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
@@ -32,6 +32,21 @@ public class Models {
     PreparedStatement stmt = null; 
     ResultSet rs = null;
     
+    //state of the user: whether he is logged in or not
+    boolean loggedIn = false;
+    
+    //user details
+    private int id;
+    private String username;
+    private String password;
+    private String email;
+    private String type;
+    
+    
+    /**
+     *
+     * @throws SQLException
+     */
     public Models() throws SQLException{
         System.out.println(DB_URL);
         conn = DriverManager.getConnection(DB_URL,USER,PASS);
@@ -43,12 +58,29 @@ public class Models {
         }
     }
     
+  
+    
     //closes the connexion
+
+    /**
+     *
+     * @throws SQLException
+     */
     public void close() throws SQLException{
         conn.close();
     }
     
     //function to insert books, only a librarian can insert books
+
+    /**
+     *
+     * @param isbn
+     * @param author
+     * @param title
+     * @param description
+     * @param publisher
+     * @return
+     */
     public boolean insertBook(int isbn, String author, String title, String description, String publisher){
         boolean inserted = false;
         
@@ -76,6 +108,18 @@ public class Models {
     
     
     //function to register a student
+
+    /**
+     *
+     * @param username
+     * @param password
+     * @param email
+     * @param first_name
+     * @param last_name
+     * @param major
+     * @param year
+     * @return
+     */
     public boolean registerStudent(String username, String password, String email, String first_name, String last_name, String major, int year){
         boolean registered = false;
         
@@ -126,6 +170,16 @@ public class Models {
         return registered;
     }
     
+    /**
+     *
+     * @param username
+     * @param password
+     * @param email
+     * @param first_name
+     * @param last_name
+     * @param department
+     * @return
+     */
     public boolean registerLecturer(String username, String password, String email, String first_name, String last_name, String department){
         boolean registered = false;
         
@@ -175,6 +229,16 @@ public class Models {
         return registered;
     }
     
+    /**
+     *
+     * @param username
+     * @param password
+     * @param email
+     * @param first_name
+     * @param last_name
+     * @param position
+     * @return
+     */
     public boolean registerLibrarian(String username, String password, String email, String first_name, String last_name, String position){
         boolean registered = false;
         
@@ -224,6 +288,16 @@ public class Models {
         return registered;
     }
     
+    /**
+     *
+     * @param id
+     * @param isbn
+     * @param author
+     * @param title
+     * @param description
+     * @param publisher
+     * @return
+     */
     public boolean updateBook(int id, int isbn, String author, String title, String description, String publisher){
         boolean updated = false;
         try{
@@ -249,6 +323,11 @@ public class Models {
         return updated;
     }
     
+    /**
+     *
+     * @param id
+     * @return
+     */
     public boolean deleteBook(int id){
         boolean deleted = false;
         
@@ -270,6 +349,10 @@ public class Models {
         return deleted;
     }
     
+    /**
+     *
+     * @return
+     */
     public ArrayList<String[]> getBooks(){
         ArrayList<String[]> toReturn = new ArrayList<>();
         
@@ -294,8 +377,12 @@ public class Models {
         return toReturn;
     }
     
-    
-    
+    /**
+     *
+     * @param id
+     * @param book_id
+     * @return
+     */
     public boolean borrowBook(int id, int book_id){
         boolean borrowed = false;
         
@@ -330,7 +417,11 @@ public class Models {
         return borrowed;
     }
     
-    
+    /**
+     *
+     * @param borroID
+     * @return 
+     */
     public boolean returnBook(int borroID){
         boolean returned = false;
         
@@ -352,6 +443,12 @@ public class Models {
         return returned;
     }
     
+    /**
+     *
+     * @param username
+     * @param password
+     * @return 
+     */
     public String[] login(String username, String password){
         
         String[] toReturn = null;
@@ -369,7 +466,12 @@ public class Models {
             String pass = rs.getString("password");
             
             if (password.equals(pass)){
-                toReturn = new String[] {Integer.toString(rs.getInt("id")), rs.getString("username"), rs.getString("email"), rs.getString("type")};
+                this.id = rs.getInt("id");
+                this.username = rs.getString("username");
+                this.email = rs.getString("email");
+                this.type = rs.getString("type");
+                toReturn = new String[] {Integer.toString(this.id), this.username, this.email, this.type};
+                loggedIn = true;
             } else {
                JOptionPane.showMessageDialog(null, "Wrong password"); 
             }
@@ -386,7 +488,15 @@ public class Models {
         return toReturn;
     }
     
+    public boolean getLoggingState(){
+        return this.loggedIn;
+    }
     
+    /**
+     *
+     * @param args
+     * @throws SQLException
+     */
     public static void main(String[] args) throws SQLException {
         
         Models m = new Models();
@@ -420,5 +530,25 @@ public class Models {
         //System.out.println(m.registerLecturer("nana.sackey","password","nana.sackey@ahseis.edu.gh","Nana Ama","Sackey","Computer Science"));
         //System.out.println(m.registerLibrarian("sasha.ofori","password","sasha.ofori@ashesi.edu.gh","Sasha","Ofori","Assistant librarian"));
         m.close();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getEmail() {
+        return email;
     }
 }

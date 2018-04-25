@@ -19,8 +19,14 @@ public class ICPFinalProject extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
         
+        //creates the model
+        Models m = new Models();
+        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLDocument.fxml"));
+        Parent root = (Parent) loader.load();
+        FXMLDocumentController controller1 = loader.getController();
+        controller1.registerModel(m);
         Scene scene = new Scene(root);
         
         stage.setScene(scene);
