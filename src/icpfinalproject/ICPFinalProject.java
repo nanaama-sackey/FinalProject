@@ -27,6 +27,7 @@ public class ICPFinalProject extends Application {
         Parent root = (Parent) loader.load();
         FXMLDocumentController controller1 = loader.getController();
         controller1.registerModel(m);
+        controller1.registerStage(stage);
         Scene scene = new Scene(root);
         
         stage.setScene(scene);
