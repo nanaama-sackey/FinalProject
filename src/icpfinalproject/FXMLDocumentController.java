@@ -46,15 +46,27 @@ public class FXMLDocumentController implements Initializable {
             System.out.println("Successful login");
             System.out.println("user: "+model.getUsername()+" email: "+model.getEmail()+" id: "+model.getId());
         }
+        if (model.getType().equals("librarian")){
+            FXMLLoader loader;
+            loader = new FXMLLoader(getClass().getResource("LibrarianPage.fxml"));
+            Parent root = (Parent) loader.load();
+            LibrarianPageController controller2 = loader.getController();
+            controller2.registerModel(model);
+            controller2.registerStage(stage);
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+        } else {
+            FXMLLoader loader;
+            loader = new FXMLLoader(getClass().getResource("StudentPage.fxml"));
+            Parent root = (Parent) loader.load();
+            StudentPageController controller2 = loader.getController();
+            controller2.registerModel(model);
+            controller2.registerStage(stage);
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+        }
         
-        FXMLLoader loader;
-        loader = new FXMLLoader(getClass().getResource("LibrarianPage.fxml"));
-        Parent root = (Parent) loader.load();
-        LibrarianPageController controller2 = loader.getController();
-        controller2.registerModel(model);
-        controller2.registerStage(stage);
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
+        
     }
     
     public void registerModel(ProjectModel m){
