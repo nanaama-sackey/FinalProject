@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  *
  * @author jean72human
  */
-public class ModelClass {
+public class Models {
     
     // JDBC driver name and database URL
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
@@ -32,7 +32,7 @@ public class ModelClass {
     PreparedStatement stmt = null; 
     ResultSet rs = null;
     
-    public ModelClass() throws SQLException{
+    public Models() throws SQLException{
         System.out.println(DB_URL);
         conn = DriverManager.getConnection(DB_URL,USER,PASS);
         System.out.println(conn);
@@ -310,7 +310,7 @@ public class ModelClass {
             stmt.setInt(2, book_id);
             stmt.setDate(3, new java.sql.Date(today.getTime().getTime()));
             
-            today.add(today.DATE, 30);
+            today.add(Calendar.DATE, 30);
             
             stmt.setDate(4, new java.sql.Date(today.getTime().getTime()));
             
@@ -319,6 +319,8 @@ public class ModelClass {
             
 
             stmt.close();
+            
+            borrowed = true;
             
         } catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Can't borrow book");
@@ -329,11 +331,79 @@ public class ModelClass {
     }
     
     
+    public boolean returnBook(int borroID){
+        boolean returned = false;
+        
+        try{
+            String sql = "DELETE FROM BORROW WHERE boro_id=?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, borroID);
+
+            stmt.executeUpdate();
+
+            stmt.close();
+            
+            returned = true;
+        } catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Can't return book");
+            System.out.println(e);
+        }
+        
+        return returned;
+    }
+    
+    public String[] login(String username, String password){
+        
+        String[] toReturn = null;
+        
+        try{
+            String sql = "SELECT * FROM LOGIN WHERE USERNAME=?";
+            stmt = conn.prepareStatement(sql);
+            
+            stmt.setString(1, username);
+
+            rs = stmt.executeQuery();
+            
+            rs.next();
+            
+            String pass = rs.getString("password");
+            
+            if (password.equals(pass)){
+                toReturn = new String[] {Integer.toString(rs.getInt("id")), rs.getString("username"), rs.getString("email"), rs.getString("type")};
+            } else {
+               JOptionPane.showMessageDialog(null, "Wrong password"); 
+            }
+
+            stmt.close();
+            
+        } catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Can't delete book");
+            System.out.println(e);
+        } catch(Exception e){
+            System.out.println(e);
+        }
+        
+        return toReturn;
+    }
+    
     
     public static void main(String[] args) throws SQLException {
         
-        ModelClass m = new ModelClass();
+        Models m = new Models();
         
+        System.out.println("I am running");
+        
+        String[] userInfo = m.login("jean72human", "passwrd");
+        if (userInfo != null){
+        for (String info : userInfo){
+            System.out.println(info);
+        }
+        }
+        //System.out.println(m.borrowBook(11, 5));
+        
+        //System.out.println(m.returnBook(1));
+        
+        /*
         ArrayList<String[]> books = m.getBooks();
         for (int i=0; i<books.size(); i++){
             for (int k=0;k<6;k++){
@@ -341,8 +411,8 @@ public class ModelClass {
             }
             System.out.println();
         }
+        */
         
-        System.out.println(m.borrowBook(3, 4));
         //System.out.println(m.insertBook(37872, "Atikpozomar Ekpekpeko", "Love is sweet like pepper", "Intensive romance", "Bankou Ltd."));
         //System.out.println(m.updateBook(3, 39043, "Atikpozomar Ekpekpeko", "Love is bitter like tilapia", "Intensive romance", "Bankou Ltd."));
         //System.out.println(m.deleteBook(7));
