@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  *
  * @author jean72human
  */
-public class Models{
+public class ProjectModel{
     
     // JDBC driver name and database URL
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
@@ -47,7 +47,7 @@ public class Models{
      *
      * @throws SQLException
      */
-    public Models() throws SQLException{
+    public ProjectModel() throws SQLException{
         System.out.println(DB_URL);
         conn = DriverManager.getConnection(DB_URL,USER,PASS);
         System.out.println(conn);
@@ -101,6 +101,8 @@ public class Models{
         } catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Can't insert book");
             System.out.println(e);
+        } catch(Exception e){
+            JOptionPane.showMessageDialog(null, "An error happened");
         }
         
         return inserted;
@@ -164,6 +166,8 @@ public class Models{
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Can't register student");
             System.out.println(e);
+        } catch(Exception e){
+            JOptionPane.showMessageDialog(null, "An error happened");
         }
         
         
@@ -223,6 +227,8 @@ public class Models{
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Can't register lecturer");
             System.out.println(e);
+        } catch(Exception e){
+            JOptionPane.showMessageDialog(null, "An error happened");
         }
         
         
@@ -282,6 +288,8 @@ public class Models{
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Can't register librarian");
             System.out.println(e);
+        } catch(Exception e){
+            JOptionPane.showMessageDialog(null, "An error happened");
         }
         
         
@@ -318,6 +326,8 @@ public class Models{
         } catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Can't update book");
             System.out.println(e);
+        } catch(Exception e){
+            JOptionPane.showMessageDialog(null, "An error happened");
         }
         
         return updated;
@@ -344,6 +354,8 @@ public class Models{
         } catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Can't delete book");
             System.out.println(e);
+        } catch(Exception e){
+            JOptionPane.showMessageDialog(null, "An error happened");
         }
         
         return deleted;
@@ -372,6 +384,8 @@ public class Models{
         } catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Can't delete book");
             System.out.println(e);
+        } catch(Exception e){
+            JOptionPane.showMessageDialog(null, "An error happened");
         }
         
         return toReturn;
@@ -412,6 +426,8 @@ public class Models{
         } catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Can't borrow book");
             System.out.println(e);
+        } catch(Exception e){
+            JOptionPane.showMessageDialog(null, "An error happened");
         }
         
         return borrowed;
@@ -438,6 +454,8 @@ public class Models{
         } catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Can't return book");
             System.out.println(e);
+        } catch(Exception e){
+            JOptionPane.showMessageDialog(null, "An error happened");
         }
         
         return returned;
@@ -499,16 +517,18 @@ public class Models{
      */
     public static void main(String[] args) throws SQLException {
         
-        Models m = new Models();
+        ProjectModel m = new ProjectModel();
         
         System.out.println("I am running");
         
+        /*
         String[] userInfo = m.login("jean72human", "passwrd");
         if (userInfo != null){
         for (String info : userInfo){
             System.out.println(info);
         }
         }
+        */
         //System.out.println(m.borrowBook(11, 5));
         
         //System.out.println(m.returnBook(1));
@@ -525,7 +545,7 @@ public class Models{
         
         //System.out.println(m.insertBook(37872, "Atikpozomar Ekpekpeko", "Love is sweet like pepper", "Intensive romance", "Bankou Ltd."));
         //System.out.println(m.updateBook(3, 39043, "Atikpozomar Ekpekpeko", "Love is bitter like tilapia", "Intensive romance", "Bankou Ltd."));
-        //System.out.println(m.deleteBook(7));
+        System.out.println(m.deleteBook(20));
         //System.out.println(m.registerStudent("jean72human", "password", "jean72human@sevetytwo.com", "The", "Human", "Computer Science", 2022));
         //System.out.println(m.registerLecturer("nana.sackey","password","nana.sackey@ahseis.edu.gh","Nana Ama","Sackey","Computer Science"));
         //System.out.println(m.registerLibrarian("sasha.ofori","password","sasha.ofori@ashesi.edu.gh","Sasha","Ofori","Assistant librarian"));

@@ -25,7 +25,7 @@ import javafx.stage.Stage;
  * @author jean72human
  */
 public class FXMLDocumentController implements Initializable {
-    Models model;
+    ProjectModel model;
     
     Stage stage;
     
@@ -57,7 +57,7 @@ public class FXMLDocumentController implements Initializable {
         stage.setScene(scene);
     }
     
-    public void registerModel(Models m){
+    public void registerModel(ProjectModel m){
         this.model = m;
     }
     

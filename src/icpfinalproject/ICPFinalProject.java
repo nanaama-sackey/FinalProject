@@ -21,7 +21,7 @@ public class ICPFinalProject extends Application {
     public void start(Stage stage) throws Exception {
         
         //creates the model
-        Models m = new Models();
+        ProjectModel m = new ProjectModel();
         
         FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLDocument.fxml"));
         Parent root = (Parent) loader.load();
